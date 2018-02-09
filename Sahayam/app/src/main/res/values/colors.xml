@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="selector_color">#5645c4ff</color>
+    <color name="background_contact_image">#c6c6ca</color>
+    <color name="drawer_background">#dfdfdf</color>
+</resources>
