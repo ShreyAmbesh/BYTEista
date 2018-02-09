@@ -160,13 +160,7 @@ public class DrawerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             usn.setText(reader.getString("usn",""));
             branch.setText(reader.getString("branch",""));
             semester.setText("Semester - "+reader.getString("semester",""));
-            imageView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    context.startActivity(new Intent(context, ProfileSetup.class).putExtra("load",true));
 
-                }
-            });
 
 
         }

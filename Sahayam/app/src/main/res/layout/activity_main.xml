@@ -155,6 +155,8 @@
                 android:orientation="horizontal">
 
                 <ListView
+                    android:id="@+id/eventList"
+                    android:dividerHeight="12dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
             </RelativeLayout>

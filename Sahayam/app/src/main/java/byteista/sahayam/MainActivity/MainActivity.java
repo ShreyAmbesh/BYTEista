@@ -1,5 +1,6 @@
 package byteista.sahayam.MainActivity;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -11,16 +12,45 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.util.TypedValue;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
+import com.android.volley.Cache;
+import com.android.volley.Network;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.BasicNetwork;
+import com.android.volley.toolbox.DiskBasedCache;
+import com.android.volley.toolbox.HurlStack;
+import com.android.volley.toolbox.StringRequest;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import byteista.sahayam.R;
 import byteista.sahayam.UserRegistration.UserRegistration;
@@ -28,17 +58,21 @@ import byteista.sahayam.Utils.Display;
 
 public class MainActivity extends AppCompatActivity {
     private static final String MY_PREFERENCES = "my_preferences";
+    private static final String REGISTER_URL = "http://35.187.242.68/byteista/Events.php";
     SharedPreferences reader;
     private Toolbar app_bar;
     private DrawerLayout drawerLayout;
     ImageView barcode;
-    TextView name,usn;
+    TextView name, usn;
     private static final String TAG = "ChatService";
-
+    ArrayList<EventsModel> data;
+    ListView events;
+    public EventsAdapter adapter;
     private boolean mBounded;
     public static Context context;
 
     SharedPreferences.Editor editor;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,25 +91,25 @@ public class MainActivity extends AppCompatActivity {
             editor.putBoolean("is_first", false);
             editor.commit();
 
-
-            barcode=findViewById(R.id.barcode);
-            name=findViewById(R.id.name);
-            usn=findViewById(R.id.usn);
-            usn.setText(reader.getString("usn",""));
-            name.setText(reader.getString("name",""));
+            data=new ArrayList<>();
+            barcode = findViewById(R.id.barcode);
+            name = findViewById(R.id.name);
+            usn = findViewById(R.id.usn);
+            usn.setText(reader.getString("usn", ""));
+            name.setText(reader.getString("name", ""));
             app_bar = (Toolbar) findViewById(R.id.app_bar);
             setSupportActionBar(app_bar);
             drawerLayout = (DrawerLayout) findViewById(R.id.drawer);
             byteista.sahayam.NavigationDrawer.NavigationDrawerFragment nav = (byteista.sahayam.NavigationDrawer.NavigationDrawerFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_navigation_drawer);
             nav.setUp(R.id.fragment_navigation_drawer, drawerLayout, app_bar, getActionBarHeight());
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-            String text=reader.getString("usn",null); // Whatever you need to encode in the QR code
+            events=findViewById(R.id.eventList);
+            String text = reader.getString("usn", null); // Whatever you need to encode in the QR code
             MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
-            Display display=new Display(this);
+            Display display = new Display(this);
             try {
                 if (text != null) {
-                    BitMatrix bitMatrix = multiFormatWriter.encode(text, BarcodeFormat.CODE_128, display.getWidth()-60,(int)(display.getWidth()-60)/3);
+                    BitMatrix bitMatrix = multiFormatWriter.encode(text, BarcodeFormat.CODE_128, display.getWidth() - 60, (int) (display.getWidth() - 60) / 3);
                     BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
                     Bitmap bitmap = barcodeEncoder.createBitmap(bitMatrix);
                     barcode.setImageBitmap(bitmap);
@@ -89,18 +123,67 @@ public class MainActivity extends AppCompatActivity {
             editor.putBoolean("active", false);
             editor.commit();
 
+            Thread connect = new Thread(new Runnable() {
+                @Override
+                public void run() {
+
+                    StringRequest stringRequest = new StringRequest(Request.Method.POST, REGISTER_URL,
+                            new Response.Listener<String>() {
+                                @Override
+                                public void onResponse(String response) {
+                                    Log.d("response string", response);
+                                    try {
+                                        JSONArray jsonarray = new JSONArray(response);
+                                        for (int i = 0; i < jsonarray.length(); i++) {
+                                            final JSONObject jsonobject = jsonarray.getJSONObject(i);
+                                            data.add(new EventsModel(jsonobject.getString("name"),jsonobject.getString("date"),jsonobject.getString("description"),jsonobject.getInt("likes")));
+                                        }
+                                    } catch(JSONException e)
+                                    {
+
+                                    }
+
+                                    adapter=new EventsAdapter(MainActivity.this,data);
+                                    events.setAdapter(adapter);
+
+                                }
+                            },
+                            new Response.ErrorListener() {
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
+                                    Log.d("response string", "mes " + error.getMessage() + " mes " + error.getLocalizedMessage());
+                                }
+                            }) {
+                        @Override
+                        protected Map<String, String> getParams() {
+                            Map<String, String> params = new HashMap<String, String>();
+                            return params;
+                        }
+
+                    };
+
+                    Cache cache = new DiskBasedCache(context.getCacheDir(), 1024 * 1024);
+                    Network network = new BasicNetwork(new HurlStack());
+                    RequestQueue requestQueue = new RequestQueue(cache, network);
+                    requestQueue.start();
+                    requestQueue.add(stringRequest);
 
 
+                }
+            });
+            connect.start();
 
 
         }
     }
+
     public boolean isFirst(Context context) {
         final boolean first = reader.getBoolean("is_first", true);
 
 
         return first;
     }
+
     private int getActionBarHeight() {
         int actionBarHeight = getSupportActionBar().getHeight();
         if (actionBarHeight != 0)
@@ -123,6 +206,82 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    class EventsAdapter extends BaseAdapter {
+        ArrayList<EventsModel> data;
+
+        public EventsAdapter(Activity activity, ArrayList<EventsModel> data) {
+            this.activity = activity;
+            this.data = data;
+            this.inflater = activity.getLayoutInflater();
+        }
+
+        Activity activity;
+        private LayoutInflater inflater = null;
+
+        @Override
+        public int getCount() {
+            return data.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return position;
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public View getView(final int position, View convertView, ViewGroup parent) {
+
+            View vi = inflater.inflate(R.layout.events_list_element, null);
+            TextView title = vi.findViewById(R.id.title);
+            final TextView date = vi.findViewById(R.id.date);
+            TextView discription = vi.findViewById(R.id.discription);
+            TextView likeNo = vi.findViewById(R.id.likeNo);
+            final ImageButton likeButton = vi.findViewById(R.id.likeButton);
+            title.setText(data.get(position).NAME);
+            date.setText(data.get(position).DATE);
+            discription.setText(data.get(position).DISCRIPTION);
+            likeNo.setText(""+data.get(position).LIKES);
+            if (data.get(position).LIKED)
+            {
+                likeButton.setImageResource(R.drawable.ic_thumbs_down);
+            }
+            else
+            {
+                likeButton.setImageResource(R.drawable.ic_thumbs_up);
+            }
+            likeButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (data.get(position).LIKED)
+                    {
+
+                        --data.get(position).LIKES;
+                        notifyDataSetChanged();
+
+                        data.get(position).LIKED=false;
+                        likeButton.setImageResource(R.drawable.ic_thumbs_down);
+                    }
+                    else
+                    {
+                        ++data.get(position).LIKES;
+                        notifyDataSetChanged();
+
+                        data.get(position).LIKED=true;
+                        likeButton.setImageResource(R.drawable.ic_thumbs_up);
+                    }
+                }
+            });
+
+
+            return vi;
         }
     }
 }
