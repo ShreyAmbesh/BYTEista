@@ -23,38 +23,50 @@
             android:id="@+id/cardProfile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:cardElevation="12dp"
+            app:cardCornerRadius="4dp"
+            android:layout_margin="8dp"
             android:layout_below="@+id/app_bar">
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
-
-                <com.pkmmte.view.CircularImageView
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:layout_margin="8dp" />
 
                 <TextView
                     android:id="@+id/name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
-                    android:textSize="20sp" />
+                    android:textColor="@android:color/black"
+                    android:textSize="20sp"
+                    android:layout_centerHorizontal="true"/>
 
+                <ImageView
+                    android:id="@+id/barcode"
+                    android:layout_below="@+id/name"
+                    android:layout_margin="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="160dp" />
                 <TextView
                     android:id="@+id/usn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
-                    android:textSize="20sp" />
-            </LinearLayout>
+                    android:textColor="@android:color/black"
+                    android:textSize="20sp"
+                    android:layout_below="@+id/barcode"
+                    android:layout_centerHorizontal="true"/>
+            </RelativeLayout>
         </android.support.v7.widget.CardView>
 
         <android.support.v7.widget.CardView
-            android:id="@+id/Events"
+            android:id="@+id/library"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:cardElevation="12dp"
+            app:cardCornerRadius="4dp"
+            android:layout_margin="8dp"
             android:layout_below="@+id/cardProfile">
 
             <RelativeLayout
@@ -63,25 +75,45 @@
                 android:orientation="horizontal">
 
                 <TextView
+                    android:id="@+id/libraryheader"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Events"
+                    android:text="Library"
                     android:layout_margin="8dp"
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:layout_below="@+id/libraryheader"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Return Date"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginStart="8dp"
                     android:textColor="@android:color/black"
-                    android:textSize="40sp" />
-                <ImageView
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:layout_margin="8dp"
-                    android:layout_alignParentEnd="true"/>
+                    android:textSize="30sp" />
+                <TextView
+                    android:layout_below="@+id/libraryheader"
+                    android:layout_width="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_height="wrap_content"
+                    android:text="02/02"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:textColor="@android:color/black"
+                    android:textSize="30sp" />
             </RelativeLayout>
 
         </android.support.v7.widget.CardView>
         <android.support.v7.widget.CardView
-            android:id="@+id/Manage_Library"
+            android:id="@+id/Friends"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/Events">
+            app:cardElevation="12dp"
+            app:cardCornerRadius="4dp"
+            android:layout_margin="8dp"
+            android:layout_below="@+id/library">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -89,98 +121,46 @@
                 android:orientation="horizontal">
 
                 <TextView
+                    android:id="@+id/FriendsHeader"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Manage Library"
+                    android:text="Friends of your Interests"
+                    android:layout_margin="8dp"
+                    android:layout_centerVertical="true"
+                    android:textColor="@android:color/black"
+                    android:textSize="25sp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_height="wrap_content"
+                    android:text="2"
                     android:layout_margin="8dp"
                     android:textColor="@android:color/black"
-                    android:textSize="40sp" />
-                <ImageView
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:layout_margin="8dp"
-                    android:layout_alignParentEnd="true"/>
+                    android:textSize="30sp" />
             </RelativeLayout>
 
         </android.support.v7.widget.CardView>
         <android.support.v7.widget.CardView
-            android:id="@+id/Manage_Mess"
+            android:id="@+id/Events"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/Manage_Library">
+            app:cardElevation="12dp"
+            app:cardCornerRadius="4dp"
+            android:layout_margin="8dp"
+            android:layout_below="@+id/Friends">
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Manage Mess"
-                    android:layout_margin="8dp"
-                    android:textColor="@android:color/black"
-                    android:textSize="40sp" />
-                <ImageView
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:layout_margin="8dp"
-                    android:layout_alignParentEnd="true"/>
+                <ListView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
             </RelativeLayout>
 
         </android.support.v7.widget.CardView>
-        <android.support.v7.widget.CardView
-            android:id="@+id/Interests"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/Manage_Mess">
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Interests"
-                    android:layout_margin="8dp"
-                    android:textColor="@android:color/black"
-                    android:textSize="40sp" />
-                <ImageView
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:layout_margin="8dp"
-                    android:layout_alignParentEnd="true"/>
-            </RelativeLayout>
-
-        </android.support.v7.widget.CardView>
-        <android.support.v7.widget.CardView
-            android:id="@+id/Settings"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/Interests">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Settings"
-                    android:layout_margin="8dp"
-                    android:textColor="@android:color/black"
-                    android:textSize="40sp" />
-                <ImageView
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:layout_margin="8dp"
-                    android:layout_alignParentEnd="true"/>
-            </RelativeLayout>
-
-        </android.support.v7.widget.CardView>
 
     </RelativeLayout>
 

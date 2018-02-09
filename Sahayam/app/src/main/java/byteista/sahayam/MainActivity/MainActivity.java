@@ -1,8 +1,10 @@
 package byteista.sahayam.MainActivity;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.os.Build;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -11,15 +13,26 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
 import android.view.MenuItem;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
+import com.journeyapps.barcodescanner.BarcodeEncoder;
 
 import byteista.sahayam.R;
 import byteista.sahayam.UserRegistration.UserRegistration;
+import byteista.sahayam.Utils.Display;
 
 public class MainActivity extends AppCompatActivity {
     private static final String MY_PREFERENCES = "my_preferences";
     SharedPreferences reader;
     private Toolbar app_bar;
     private DrawerLayout drawerLayout;
+    ImageView barcode;
+    TextView name,usn;
     private static final String TAG = "ChatService";
 
     private boolean mBounded;
@@ -45,8 +58,11 @@ public class MainActivity extends AppCompatActivity {
             editor.commit();
 
 
-
-
+            barcode=findViewById(R.id.barcode);
+            name=findViewById(R.id.name);
+            usn=findViewById(R.id.usn);
+            usn.setText(reader.getString("usn",""));
+            name.setText(reader.getString("name",""));
             app_bar = (Toolbar) findViewById(R.id.app_bar);
             setSupportActionBar(app_bar);
             drawerLayout = (DrawerLayout) findViewById(R.id.drawer);
@@ -54,7 +70,20 @@ public class MainActivity extends AppCompatActivity {
             nav.setUp(R.id.fragment_navigation_drawer, drawerLayout, app_bar, getActionBarHeight());
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+            String text=reader.getString("usn",null); // Whatever you need to encode in the QR code
+            MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
+            Display display=new Display(this);
+            try {
+                if (text != null) {
+                    BitMatrix bitMatrix = multiFormatWriter.encode(text, BarcodeFormat.CODE_128, display.getWidth()-60,(int)(display.getWidth()-60)/3);
+                    BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
+                    Bitmap bitmap = barcodeEncoder.createBitmap(bitMatrix);
+                    barcode.setImageBitmap(bitmap);
+                }
 
+            } catch (WriterException e) {
+                e.printStackTrace();
+            }
 
 
             editor.putBoolean("active", false);

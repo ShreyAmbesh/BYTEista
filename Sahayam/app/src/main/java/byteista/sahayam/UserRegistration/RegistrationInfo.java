@@ -1,7 +1,7 @@
 package byteista.sahayam.UserRegistration;
 
 /**
- * Created by murli jee on 7/1/2017.
+ * Created by shrey on 7/1/2017.
  */
 
 public class RegistrationInfo {

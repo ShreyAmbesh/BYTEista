@@ -162,8 +162,8 @@ public class NavigationDrawerFragment extends Fragment {
     public static List<DrawerLayoutManager> getData()
     {
         List<DrawerLayoutManager> data=new ArrayList<>();
-        int[] icons={R.drawable.ic_launcher_foreground,R.drawable.ic_launcher_foreground,R.drawable.ic_launcher_foreground,R.drawable.ic_launcher_foreground,R.drawable.ic_launcher_foreground,R.drawable.ic_launcher_foreground};
-            String[] titles={"TRENDING","CHATS","VOICE & VIDEO CALLS","NOTIFICATIONS","PUBLIC PROFILE","SETTINGS"};
+        int[] icons={R.drawable.ic_event_black,R.drawable.ic_library_books_black,R.drawable.ic_local_cafe_black,R.drawable.ic_people_black,R.drawable.ic_settings,R.drawable.ic_info};
+            String[] titles={"Events","Manage Library","Manage Mess","Interests","Settings","About Us"};
         for(int i=0;i<icons.length;i++)
         {
             DrawerLayoutManager current=new DrawerLayoutManager();

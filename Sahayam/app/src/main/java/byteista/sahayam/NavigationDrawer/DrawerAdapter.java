@@ -39,7 +39,7 @@ import byteista.sahayam.Utils.DatabaseHelper;
 import byteista.sahayam.Utils.Display;
 
 /**
- * Created by murli jee on 4/26/2017.
+ * Created by shrey on 4/26/2017.
  */
 
 public class DrawerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -98,11 +98,11 @@ public class DrawerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == TYPE_HEADER) {
             View view = inflater.inflate(R.layout.drawer_header, parent, false);
-            view.setMinimumHeight((display_height*3)/9);
+            view.setMinimumHeight((int) (display_height*2.5)/9);
             return new HeaderHolder(view);
         } else {
             View view = inflater.inflate(R.layout.custom_drawer_item_view, parent, false);
-            view.setMinimumHeight((display_height*2)/9);
+            view.setMinimumHeight((int) (display_height*2.17)/9);
             return new ItemHolder(view);
         }
     }
@@ -147,15 +147,19 @@ public class DrawerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     class HeaderHolder extends RecyclerView.ViewHolder {
         com.pkmmte.view.CircularImageView imageView;
+        TextView name,usn,branch,semester;
 
         public HeaderHolder(View itemView) {
             super(itemView);
             imageView = (com.pkmmte.view.CircularImageView) itemView.findViewById(R.id.profile_pic_image_view_drawer);
-            RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) imageView.getLayoutParams();
-            layoutParams.height =((display_height*3)/9);
-            layoutParams.width=((display_height*3)/9);
-            layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT);
-            imageView.setLayoutParams(layoutParams);
+            name= itemView.findViewById(R.id.name);
+            usn=itemView.findViewById(R.id.usn);
+            branch=itemView.findViewById(R.id.branch);
+            semester=itemView.findViewById(R.id.semester);
+            name.setText(reader.getString("name",""));
+            usn.setText(reader.getString("usn",""));
+            branch.setText(reader.getString("branch",""));
+            semester.setText("Semester - "+reader.getString("semester",""));
             imageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -177,10 +181,7 @@ public class DrawerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             textView = (TextView) itemView.findViewById(R.id.text);
 
             imageView = (ImageView) itemView.findViewById(R.id.image);
-            android.view.ViewGroup.LayoutParams layoutParams = imageView.getLayoutParams();
-            layoutParams.width =display.getWidth()-action_bar_height-15;
-            layoutParams.height =(int)((display_height*1.5)/9) ;
-            imageView.setLayoutParams(layoutParams);
+
 
 
 
