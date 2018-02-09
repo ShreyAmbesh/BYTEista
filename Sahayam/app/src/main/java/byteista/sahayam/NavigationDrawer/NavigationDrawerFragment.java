@@ -13,6 +13,7 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,11 +48,17 @@ public class NavigationDrawerFragment extends Fragment {
     private boolean mFromSavedInstanceState;
     public static final String PREF_FILE_NAME = "testpref";
     public static final String KEY_USER_LEARNED_DRAWER = "user_learned_drawer";
-
+    View layout;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View layout=inflater.inflate(R.layout.fragment_navigation_drawer, container, false);
+        try {
+            layout = inflater.inflate(R.layout.fragment_navigation_drawer, container, false);
+        }
+        catch (InflateException e)
+        {
+
+        }
         drawerRecycler=(RecyclerView) layout.findViewById(R.id.drawer_recycler);
 
 

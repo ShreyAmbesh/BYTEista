@@ -4,11 +4,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
+import android.view.MenuItem;
 
 import byteista.sahayam.R;
 import byteista.sahayam.UserRegistration.UserRegistration;
@@ -39,7 +41,6 @@ public class MainActivity extends AppCompatActivity {
         } else {
             setContentView(R.layout.activity_main);
             context = this;
-            setContentView(R.layout.activity_main);
             editor.putBoolean("is_first", false);
             editor.commit();
 
@@ -82,5 +83,17 @@ public class MainActivity extends AppCompatActivity {
         } else if (getTheme().resolveAttribute(byteista.sahayam.R.attr.actionBarSize, tv, true))
             actionBarHeight = TypedValue.complexToDimensionPixelSize(tv.data, getResources().getDisplayMetrics());
         return actionBarHeight;
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+
+            case android.R.id.home:
+                drawerLayout.openDrawer(GravityCompat.START);  // OPEN DRAWER
+
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

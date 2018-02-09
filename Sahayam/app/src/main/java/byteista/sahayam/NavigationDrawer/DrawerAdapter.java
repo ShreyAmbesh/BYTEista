@@ -9,6 +9,7 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Environment;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Gravity;
@@ -73,12 +74,14 @@ public class DrawerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     public void getImagePath()
     {
         try {
-            Cursor cursor=sqLiteDatabase.query(true,"my_profile",new String[]{"profile_pic"},"jabber_id=?",new String[]{reader.getString("jabber_id",null)},null,null,null,null);
+            Cursor cursor=sqLiteDatabase.query(true,"my_profile",null,"phone_no=?",new String[]{reader.getString("phone_no",null)},null,null,null,null);
 
             if (cursor != null && cursor.getCount() > 0)
             {cursor.moveToFirst();
                 image = cursor.getString(0);}
             sqLiteDatabase.close();
+            image=reader.getString("profile_pic",null);
+            Log.d("PATTTTHHHHH",image);
         }catch (SQLException e)
         {
             Log.d("sql error",e.getMessage());
@@ -110,7 +113,7 @@ public class DrawerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             final HeaderHolder headerHolder= (HeaderHolder) holder;
             try {
                 if (image!=null) {
-                    FileInputStream img = context.openFileInput(image);
+                    FileInputStream img = new FileInputStream(Environment.getExternalStorageDirectory()+"/"+image);
                     Bitmap theImage = BitmapFactory.decodeStream(img);
                     headerHolder.imageView.setImageBitmap(BitmapManipulator.scaleBitmap(Bitmap.createScaledBitmap(theImage, theImage.getWidth() / 2, theImage.getHeight() / 2, false)));
                 }

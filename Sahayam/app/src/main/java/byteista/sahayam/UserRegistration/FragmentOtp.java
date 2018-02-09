@@ -157,6 +157,7 @@ public class FragmentOtp extends Fragment {
                                 editor.putString("hostelite",UserRegistration.registrationInfo.HOSTELITE );
 
                                 editor.commit();
+                                Log.d("name",reader.getString("name","yo"));
                                 Intent intent=new Intent(getContext(),ProfileSetup.class);
                                 startActivity(intent);
                                 getActivity().finish();

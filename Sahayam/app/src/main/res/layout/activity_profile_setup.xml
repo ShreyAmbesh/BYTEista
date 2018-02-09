@@ -80,7 +80,7 @@
                     android:layout_alignTop="@+id/button1"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="4"
-                    android:hint="Enter Your Status"
+                    android:hint="Enter Your Interests"
                     android:maxHeight="80dp" />
 
 
@@ -96,7 +96,7 @@
                 android:background="@drawable/buttonshape"
                 android:padding="20dp"
                 android:layout_margin="50dp"
-                android:text="Continue"
+                android:text="Upload"
                 android:textColor="@android:color/white" />
 
 

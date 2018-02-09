@@ -21,6 +21,8 @@
         </activity>
         <activity android:name=".UserRegistration.UserRegistration" />
         <activity android:name=".UserRegistration.ProfileSetup" />
+        <activity android:name=".Media.GalleryActivity" />
+        <activity android:name=".Media.PhotosActivity" />
     </application>
 
 </manifest>

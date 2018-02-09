@@ -9,6 +9,8 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,6 +20,8 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import byteista.sahayam.MainActivity.MainActivity;
+import byteista.sahayam.Media.GalleryActivity;
+import byteista.sahayam.Network.UploadProfilePic;
 import byteista.sahayam.R;
 
 import com.bumptech.glide.Glide;
@@ -41,6 +45,7 @@ public class ProfileSetup extends AppCompatActivity {
     EditText status_edit_text;
     private View.OnClickListener listener;
     boolean updateprofilepic;
+    Button upload;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,18 +63,17 @@ public class ProfileSetup extends AppCompatActivity {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setType("image/*");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(intent, "Select Picture"), REQUESTCODE);
+                Intent intent = new Intent(ProfileSetup.this, GalleryActivity.class);
+                intent.putExtra("TYPE", "IMAGES");
+                startActivityForResult(intent, REQUESTCODE);
             }
         });
         updateprofilepic = false;
-        Button upload = (Button) findViewById(R.id.buttonContinue);
+        upload = (Button) findViewById(R.id.buttonContinue);
         try {
             DatabaseHelper helper = new DatabaseHelper(this);
             SQLiteDatabase sqLiteDatabase = helper.getReadableDatabase();
-            final Cursor cursor = sqLiteDatabase.query(true, "my_profile", new String[]{"profile_pic", "status"}, "jabber_id=?", new String[]{reader.getString("jabber_id", null)}, null, null, null, null);
+            final Cursor cursor = sqLiteDatabase.query(true, "my_profile", new String[]{"profile_pic", "interests"}, "phone_no=?", new String[]{reader.getString("phone_no", null)}, null, null, null, null);
             Log.d("bolean load", "" + getIntent().getBooleanExtra("load", false));
             if (cursor != null && cursor.getCount() > 0 && getIntent().getBooleanExtra("load", false)) {
                 cursor.moveToFirst();
@@ -86,22 +90,7 @@ public class ProfileSetup extends AppCompatActivity {
             }
             sqLiteDatabase.close();
 
-            upload.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
 
-
-                    /*if (updateprofilepic)
-                        //new UploadProfilePic(path, reader.getString("jabber_id", null), ProfileSetup.this).execute();
-                        //UserRegistration.registrationInfo.USERNAME=FragmentUserName.userName.getText().toString();
-                    else
-                        ProfileSetup.this.finish();*/
-                    Intent intent=new Intent(ProfileSetup.this, MainActivity.class);
-                    startActivity(intent);
-
-
-                }
-            });
 
         } catch (SQLException e) {
             Log.d("sql error", e.getMessage());
@@ -112,9 +101,19 @@ public class ProfileSetup extends AppCompatActivity {
         }
 
 
-        editor.putBoolean("is_first", false);
-        editor.commit();
+        /*editor.putBoolean("is_first", false);
+        editor.commit();*/
+        upload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (updateprofilepic && path!=null)
+                    new UploadProfilePic(path, reader.getString("phone", null), ProfileSetup.this).execute();
 
+                ProfileSetup.this.finish();
+                Intent intent=new Intent(ProfileSetup.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
 
 
 
@@ -204,7 +203,6 @@ public class ProfileSetup extends AppCompatActivity {
 
         }
     }
-
 
     private Bitmap scaleBitmap(Bitmap srcBmp) {
         Bitmap dstBmp;
