@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="byteista.sahayam.ActivityInterests">
+    <include
+        android:id="@+id/app_bar"
+        layout="@layout/app_bar" />
+    <GridLayout
+        android:layout_width="match_parent"
+        android:id="@+id/List"
+        android:layout_centerInParent="true"
+        android:layout_height="wrap_content"
+        android:rowCount="7"
+        android:columnCount="2"
+        >
+        <Button
+            android:id="@+id/pubadmn"
+            android:text="Public Administration"
+            android:background="@android:color/white"
+            android:layout_margin="4dp"
+            android:layout_gravity="center"/>
+
+        <Button
+            android:id="@+id/enterp"
+            android:text="Enterpreneurship"
+            android:layout_margin="4dp"
+            android:background="@android:color/white"
+            android:layout_gravity="center"/>
+
+        <Button
+            android:id="@+id/poems"
+            android:text="Poems"
+            android:layout_margin="4dp"
+            android:background="@android:color/white"
+            android:layout_gravity="center"/>
+
+        <Button
+            android:id="@+id/dance"
+            android:text="dancing"
+            android:layout_margin="4dp"
+            android:background="@android:color/white"
+            android:layout_gravity="center"/>
+
+        <Button
+            android:id="@+id/sing"
+            android:text="Singing"
+            android:background="@android:color/white"
+            android:layout_gravity="center"/>
+
+        <Button
+            android:id="@+id/litre"
+            android:text="Literature"
+            android:layout_margin="4dp"
+            android:background="@android:color/white"
+            android:layout_gravity="center"/>
+
+        <Button
+            android:id="@+id/coding"
+            android:text="Coding"
+            android:layout_margin="4dp"
+            android:background="@android:color/white"
+            android:layout_gravity="center"/>
+
+        <Button
+            android:id="@+id/hacking"
+            android:text="hacking"
+            android:layout_margin="4dp"
+            android:background="@android:color/white"
+            android:layout_gravity="center"/>
+
+        <Button
+            android:id="@+id/modelling"
+            android:text="Modelling"
+            android:layout_margin="4dp"
+            android:background="@android:color/white"
+            android:layout_gravity="center"/>
+
+        <Button
+            android:id="@+id/evntmanagement"
+            android:text="Event Management"
+            android:layout_margin="4dp"
+            android:background="@android:color/white"
+            android:layout_gravity="center"/>
+
+        <Button
+            android:id="@+id/speaking"
+            android:text="Speaking"
+            android:background="@android:color/white"
+            android:layout_margin="4dp"
+            android:layout_gravity="center"/>
+
+        <Button
+            android:id="@+id/acting"
+            android:text="Acting"
+            android:layout_margin="4dp"
+            android:background="@android:color/white"
+            android:layout_gravity="center"/>
+
+        <Button
+            android:id="@+id/art"
+            android:text="Art"
+            android:layout_margin="4dp"
+            android:background="@android:color/white"
+            android:layout_gravity="center"/>
+
+        <Button
+            android:id="@+id/photography"
+            android:text="Photography"
+            android:layout_margin="4dp"
+            android:background="@android:color/white"
+            android:layout_gravity="center"/>
+
+    </GridLayout>
+    </RelativeLayout>
