@@ -3,21 +3,47 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="byteista.sahayam.UserRegistration.FragmentOpening"
+    android:background="@drawable/background_opening"
 >
 
 
-    <TextView
+    <ImageView
         android:id="@+id/first_app_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="204dp"
+        android:layout_centerInParent="true"
         android:elevation="24dp"
-        android:text="SAHAYAM"
         android:textColor="@color/colorPrimary"
-        android:textSize="72dp"
+        android:src="@drawable/logo"
         android:textStyle="bold" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/first_app_name"
+        android:layout_centerHorizontal="true"
+        android:textColor="@android:color/black"
+        android:textSize="24sp"
+        android:text="A BYTEista Initiative"/>
+
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/shimmer_swipe"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="40dp"
+        >
+
+        <TextView
+            android:id="@+id/textSwipe"
+            style="@style/thin.white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/swipe_to_continue"
+            android:textSize="30sp" />
+    </com.facebook.shimmer.ShimmerFrameLayout>
 
 
 </RelativeLayout>

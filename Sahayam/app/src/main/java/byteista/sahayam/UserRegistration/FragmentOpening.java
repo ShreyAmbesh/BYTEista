@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.facebook.shimmer.ShimmerFrameLayout;
+
 import byteista.sahayam.R;
 
 
@@ -18,7 +20,7 @@ import byteista.sahayam.R;
 
 public class FragmentOpening extends Fragment {
     RegistrationPager viewPager;
-
+    ShimmerFrameLayout SWIPE;
     static FragmentOpening newInstance(RegistrationPager pager) {
         FragmentOpening f = new FragmentOpening();
         Bundle args = new Bundle();
@@ -46,6 +48,9 @@ public class FragmentOpening extends Fragment {
 
         View v=inflater.inflate(R.layout.fragment_opening, container, false);
 
+        SWIPE = (ShimmerFrameLayout) v.findViewById(R.id.shimmer_swipe);
+        SWIPE.setAngle(ShimmerFrameLayout.MaskAngle.CW_180);
+        SWIPE.startShimmerAnimation();
         return v;
     }
     @Override

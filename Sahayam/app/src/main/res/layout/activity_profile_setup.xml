@@ -70,7 +70,14 @@
                 android:weightSum="5">
 
 
-
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/first_app_name"
+                    android:layout_centerHorizontal="true"
+                    android:textColor="@android:color/black"
+                    android:textSize="24sp"
+                    android:text="Select your Interests"/>
 
 
             </LinearLayout>

@@ -26,7 +26,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        Toast.makeText(context,"CREAT Called",Toast.LENGTH_LONG).show();
 
         String querry2="CREATE TABLE IF NOT EXISTS 'my_profile'" +
                 " ('name' varchar(150) NOT NULL," +
@@ -48,7 +47,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 " ('_id' int AUTO INCREMENT PRIMARY KEY," +
                 "'date' timestamp UNIQUE);";
 
-        Toast.makeText(context,"CREATED",Toast.LENGTH_LONG).show();
         try {
             db.execSQL(querry2);
             db.execSQL(querry3);

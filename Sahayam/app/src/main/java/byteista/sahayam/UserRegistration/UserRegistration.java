@@ -15,7 +15,6 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.Toast;
 import byteista.sahayam.R;
 
 public class UserRegistration extends AppCompatActivity  {
@@ -73,7 +72,7 @@ public class UserRegistration extends AppCompatActivity  {
                         Uri uri = Uri.fromParts("package", getPackageName(), null);
                         intent.setData(uri);
                         startActivityForResult(intent, REQUEST_PERMISSION_SETTING);
-                        Toast.makeText(getBaseContext(), "Go to Permissions to Grant  Camera and Location", Toast.LENGTH_LONG).show();
+
                     }
                 });
                 builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -137,7 +136,6 @@ public class UserRegistration extends AppCompatActivity  {
                 });
                 builder.show();
             } else {
-                Toast.makeText(getBaseContext(),"Unable to get Permission",Toast.LENGTH_LONG).show();
                 finish();
             }
         }
@@ -158,7 +156,6 @@ public class UserRegistration extends AppCompatActivity  {
     }
 
     private void proceedAfterPermission() {
-        Toast.makeText(getBaseContext(), "We got All Permissions", Toast.LENGTH_LONG).show();
         setContentView(R.layout.activity_user_registration);
         registrationPager=findViewById(R.id.registration_pager);
         registrationPager.setAdapter(new MyRegistrationPagerAdapter(getSupportFragmentManager()));
@@ -205,7 +202,6 @@ public class UserRegistration extends AppCompatActivity  {
 
                 case 1:return FragmentPhoneNumber.newInstance(registrationPager);
 
-                case 2:return FragmentOtp.newInstance(registrationPager);
 
 
 
@@ -217,7 +213,7 @@ public class UserRegistration extends AppCompatActivity  {
 
         @Override
         public int getCount() {
-            return 3;
+            return 2;
         }
 
         @Override
